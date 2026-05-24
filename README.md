@@ -81,17 +81,6 @@ RON_Server-Browser/
 | `GamePath` | 游戏安装路径 | 自动检测 Steam 默认安装位置 |
 | `Language` | 界面语言 | `zh-CN` |
 
-## 发布流程
-
-推送 `v*` 格式的 tag 即可触发 GitHub Actions 自动构建并发布：
-
-```bash
-git tag v1.0.0
-git push origin v1.0.0
-```
-
-发布产物为 `RON_Server-Browser-{version}-win-x64.zip`，包含自包含单文件可执行程序。
-
 ## 许可证
 
 [MIT License](LICENSE)

@@ -6,22 +6,112 @@
         xmlns:ext="clr-namespace:RON_Server_Browser.Extensions"
         mc:Ignorable="d"
         Title="{ext:Localize Key=Window.Title}" 
-        Height="650" Width="1100"
-        MinHeight="450" MinWidth="800"
+        Height="700" Width="1150"
+        MinHeight="500" MinWidth="850"
         WindowStartupLocation="CenterScreen"
-        Closing="Window_Closing">
+        Closing="Window_Closing"
+        Background="#F0F2F5"
+        FontFamily="Segoe UI, Microsoft YaHei, sans-serif">
+
     <Window.Resources>
         <Style TargetType="Button">
-            <Setter Property="Padding" Value="12,6"/>
-            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Background" Value="#0078D4"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="16,8"/>
+            <Setter Property="Margin" Value="4"/>
             <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="4" 
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#2B88D8"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#005A9E"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#E0E0E0"/>
+                                <Setter Property="Foreground" Value="#9E9E9E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="Padding" Value="6,4"/>
+
+        <Style x:Key="SuccessButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#107C10"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#0B5A0B"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="Margin" Value="4"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Margin" Value="4,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="White"/>
         </Style>
+
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="RowBackground" Value="White"/>
+            <Setter Property="AlternatingRowBackground" Value="#F8F9FA"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#EFEFEF"/>
+            <Setter Property="VerticalGridLinesBrush" Value="Transparent"/>
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="RowHeight" Value="38"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="CanUserSortColumns" Value="True"/>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#FAFAFA"/>
+            <Setter Property="Foreground" Value="#666666"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+
+        <Style TargetType="DataGridCell">
+            <Setter Property="Padding" Value="12,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridCell">
+                        <Border Padding="{TemplateBinding Padding}" Background="Transparent">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#E1F0FF"/>
+                    <Setter Property="Foreground" Value="#000000"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <DropShadowEffect x:Key="CardShadow" BlurRadius="12" ShadowDepth="2" Direction="270" Color="#D0D0D0" Opacity="0.4"/>
     </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -29,108 +119,138 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="8,6">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="BtnConnect" Grid.Column="0" 
-                    Content="{ext:Localize Key=Button.Connect}" 
-                    Click="BtnConnect_Click"
-                    MinWidth="90"
-                    ToolTip="{ext:Localize Key=Tooltip.Connect}"/>
-            <Button x:Name="BtnRefresh" Grid.Column="1" 
-                    Content="{ext:Localize Key=Button.Refresh}"
-                    Click="BtnRefresh_Click"
-                    IsEnabled="False"
-                    MinWidth="90"
-                    ToolTip="{ext:Localize Key=Tooltip.Refresh}"/>
-            <ComboBox x:Name="CmbDistance" Grid.Column="2" 
-                      MinWidth="80" Margin="10,0,0,0"
-                      ToolTip="{ext:Localize Key=Tooltip.Distance}">
-                <ComboBoxItem Content="{ext:Localize Key=ComboBox.Distance.Closest}" IsSelected="True"/>
-                <ComboBoxItem Content="{ext:Localize Key=ComboBox.Distance.Default}"/>
-                <ComboBoxItem Content="{ext:Localize Key=ComboBox.Distance.Far}"/>
-                <ComboBoxItem Content="{ext:Localize Key=ComboBox.Distance.Worldwide}"/>
-            </ComboBox>
-            <StackPanel Grid.Column="4" Orientation="Horizontal">
-                <Button x:Name="BtnJoin" 
-                        Content="{ext:Localize Key=Button.Join}"
-                        Click="BtnJoin_Click"
+
+        <Border Grid.Row="0" Margin="12,12,12,6" Background="White" CornerRadius="6" Effect="{StaticResource CardShadow}">
+            <Grid Margin="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="BtnConnect" Grid.Column="0" 
+                        Content="{ext:Localize Key=Button.Connect}" 
+                        Click="BtnConnect_Click"
+                        MinWidth="110"
+                        ToolTip="{ext:Localize Key=Tooltip.Connect}"/>
+
+                <Button x:Name="BtnRefresh" Grid.Column="1" Margin="8,4,4,4"
+                        Content="{ext:Localize Key=Button.Refresh}"
+                        Click="BtnRefresh_Click"
                         IsEnabled="False"
-                        ToolTip="{ext:Localize Key=Tooltip.Join}"/>
-            </StackPanel>
-            <ComboBox x:Name="CmbLanguage" Grid.Column="5" MinWidth="80" Margin="10,0,0,0"
-                      SelectionChanged="CmbLanguage_SelectionChanged"
-                      Loaded="CmbLanguage_Loaded"/>
-        </Grid>
-        <Border Grid.Row="1" Margin="8,2,8,4" 
-                Padding="6" 
-                Background="#FFF3CD" 
-                CornerRadius="4">
+                        MinWidth="110"
+                        ToolTip="{ext:Localize Key=Tooltip.Refresh}"/>
+
+                <ComboBox x:Name="CmbDistance" Grid.Column="2" 
+                          MinWidth="120" Margin="16,4,4,4"
+                          ToolTip="{ext:Localize Key=Tooltip.Distance}">
+                    <ComboBoxItem Content="{ext:Localize Key=ComboBox.Distance.Closest}" IsSelected="True"/>
+                    <ComboBoxItem Content="{ext:Localize Key=ComboBox.Distance.Default}"/>
+                    <ComboBoxItem Content="{ext:Localize Key=ComboBox.Distance.Far}"/>
+                    <ComboBoxItem Content="{ext:Localize Key=ComboBox.Distance.Worldwide}"/>
+                </ComboBox>
+
+                <StackPanel Grid.Column="4" Orientation="Horizontal" Margin="0,0,16,0">
+                    <Button x:Name="BtnJoin" Style="{StaticResource SuccessButtonStyle}"
+                            Content="{ext:Localize Key=Button.Join}"
+                            Click="BtnJoin_Click"
+                            IsEnabled="False"
+                            MinWidth="110"
+                            ToolTip="{ext:Localize Key=Tooltip.Join}"/>
+                </StackPanel>
+
+                <ComboBox x:Name="CmbLanguage" Grid.Column="5" MinWidth="100" 
+                          SelectionChanged="CmbLanguage_SelectionChanged"
+                          Loaded="CmbLanguage_Loaded"/>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Margin="12,4,12,6" 
+                Padding="12,10" 
+                Background="#E8F4FD" 
+                BorderBrush="#BCE0FD"
+                BorderThickness="1"
+                CornerRadius="6">
             <TextBlock x:Name="TxtStatus" 
                        Text="{ext:Localize Key=Status.Ready}" 
-                       FontSize="13"
+                       FontSize="14"
+                       FontWeight="Medium"
+                       Foreground="#005A9E"
                        TextWrapping="Wrap"/>
         </Border>
-        <Grid Grid.Row="2" Margin="8,0,8,4">
+
+        <Grid Grid.Row="2" Margin="12,4,12,8">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <DataGrid Grid.Row="0" x:Name="ServerGrid" 
-                      AutoGenerateColumns="False"
-                      CanUserSortColumns="True"
-                      IsReadOnly="True"
-                      SelectionMode="Single"
-                      SelectionChanged="ServerGrid_SelectionChanged"
-                      MouseDoubleClick="ServerGrid_MouseDoubleClick"
-                      RowHeaderWidth="0"
-                      AlternatingRowBackground="#F5F5F5"
-                      GridLinesVisibility="Horizontal"
-                      VerticalScrollBarVisibility="Auto"
-                      LoadingRow="ServerGrid_LoadingRow">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="{ext:Localize Key=DataGrid.Header.SessionId}" 
-                                        Binding="{Binding SessionId}" 
-                                        Width="180"
-                                        SortMemberPath="SessionId"/>
-                    <DataGridTextColumn Header="{ext:Localize Key=DataGrid.Header.OwnerName}" 
-                                        Binding="{Binding OwnerName}" 
-                                        Width="100"
-                                        SortMemberPath="OwnerName"/>
-                    <DataGridTextColumn Header="{ext:Localize Key=DataGrid.Header.PlayerCount}" 
-                                        Binding="{Binding PlayerDisplay}" 
-                                        Width="70"
-                                        SortMemberPath="CurrentPlayers">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-            <GroupBox Grid.Row="1" Header="{ext:Localize Key=GroupBox.Header.Metadata}" Margin="0,6,0,0" Padding="6">
-                <ScrollViewer MaxHeight="120" VerticalScrollBarVisibility="Auto">
-                    <TextBlock x:Name="TxtMetadataDetail" 
-                               Text="{ext:Localize Key=TextBlock.Metadata.Empty}"
-                               FontFamily="Consolas"
-                               FontSize="12"
-                               TextWrapping="Wrap"/>
-                </ScrollViewer>
-            </GroupBox>
+
+            <Border Grid.Row="0" Background="White" CornerRadius="6" Effect="{StaticResource CardShadow}">
+                <Border CornerRadius="6" ClipToBounds="True">
+                    <DataGrid x:Name="ServerGrid" 
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              SelectionChanged="ServerGrid_SelectionChanged"
+                              MouseDoubleClick="ServerGrid_MouseDoubleClick"
+                              RowHeaderWidth="0"
+                              LoadingRow="ServerGrid_LoadingRow"
+                              VerticalScrollBarVisibility="Auto">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="{ext:Localize Key=DataGrid.Header.SessionId}" 
+                                                Binding="{Binding SessionId}" 
+                                                Width="220"
+                                                SortMemberPath="SessionId"/>
+                            <DataGridTextColumn Header="{ext:Localize Key=DataGrid.Header.OwnerName}" 
+                                                Binding="{Binding OwnerName}" 
+                                                Width="*"
+                                                SortMemberPath="OwnerName"/>
+                            <DataGridTextColumn Header="{ext:Localize Key=DataGrid.Header.PlayerCount}" 
+                                                Binding="{Binding PlayerDisplay}" 
+                                                Width="100"
+                                                SortMemberPath="CurrentPlayers">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+            </Border>
+
+            <Border Grid.Row="1" Margin="0,12,0,0" Background="White" CornerRadius="6" Padding="12" Effect="{StaticResource CardShadow}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{ext:Localize Key=GroupBox.Header.Metadata}" 
+                               FontWeight="Bold" Foreground="#444" Margin="0,0,0,8"/>
+                    <Border Grid.Row="1" Background="#F8F9FA" BorderBrush="#E9ECEF" BorderThickness="1" CornerRadius="4" Padding="8">
+                        <ScrollViewer MaxHeight="100" VerticalScrollBarVisibility="Auto">
+                            <TextBlock x:Name="TxtMetadataDetail" 
+                                       Text="{ext:Localize Key=TextBlock.Metadata.Empty}"
+                                       FontFamily="Consolas"
+                                       FontSize="13"
+                                       Foreground="#333"
+                                       TextWrapping="Wrap"/>
+                        </ScrollViewer>
+                    </Border>
+                </Grid>
+            </Border>
         </Grid>
-        <StatusBar Grid.Row="3" Margin="0,0,0,0">
+
+        <StatusBar Grid.Row="3" Background="White" BorderBrush="#E0E0E0" BorderThickness="0,1,0,0" Padding="4,2">
             <StatusBarItem>
-                <TextBlock x:Name="TxtServerCount" Text="{ext:Localize Key=StatusBar.ServerCount}" Margin="8,0"/>
+                <TextBlock x:Name="TxtServerCount" Text="{ext:Localize Key=StatusBar.ServerCount}" FontWeight="Medium" Foreground="#555" Margin="8,0"/>
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">
-                <TextBlock Text="{ext:Localize Key=StatusBar.Version}" Margin="8,0" Foreground="Gray"/>
+                <TextBlock Text="{ext:Localize Key=StatusBar.Version}" Margin="8,0" Foreground="#888"/>
             </StatusBarItem>
         </StatusBar>
     </Grid>

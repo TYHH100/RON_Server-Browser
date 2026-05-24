@@ -189,6 +189,8 @@ namespace RON_Server_Browser.Services
                 if (result == null)
                     throw new Exception(_localization.GetString("Lobby.Error.JoinFailed"));
 
+                result.Value.Leave();
+
                 JoinLobbyViaSteamProtocol(lobbyId);
             }
         }

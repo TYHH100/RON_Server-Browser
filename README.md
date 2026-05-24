@@ -1,5 +1,8 @@
 # RON Server Browser
 
+> [!WARNING]
+> 本项目完全由AI进行编写，只能保证代码能够运行
+
 Ready Or Not（严阵以待）Steam 大厅浏览器，基于 Steam Lobby 系统实现服务器列表的浏览、搜索和加入功能。
 
 ## 技术栈

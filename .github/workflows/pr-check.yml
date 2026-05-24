@@ -1,0 +1,27 @@
+name: PR Build Check
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+      - dev
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore RON_Server-Browser.sln
+
+      - name: Build
+        run: dotnet build RON_Server-Browser.sln -c Release --no-restore

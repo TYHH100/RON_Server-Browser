@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RootNamespace>RON_Server_Browser</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Facepunch.Steamworks" Version="2.3.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Resources\Languages\*.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <Target Name="CopySteamApiDll" AfterTargets="Build">
+    <Copy SourceFiles="$(NuGetPackageRoot)facepunch.steamworks\2.3.3\content\steam_api64.dll" 
+          DestinationFolder="$(OutputPath)" 
+          SkipUnchangedFiles="true" />
+  </Target>
+  
+  <Target Name="CopySteamApiDllPublish" AfterTargets="Publish">
+    <Copy SourceFiles="$(NuGetPackageRoot)facepunch.steamworks\2.3.3\content\steam_api64.dll" 
+          DestinationFolder="$(PublishDir)" 
+          SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>

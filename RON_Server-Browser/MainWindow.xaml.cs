@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -87,9 +88,13 @@ public partial class MainWindow : Window
             TxtStatus.Text = _localizationService.GetString("Status.GameException", ex.Message);
             TxtStatus.Foreground = System.Windows.Media.Brushes.Red;
         }
+        finally
+        {
+            UpdateVersionText();
+        }
     }
 
-    private async void BtnConnect_Click(object sender, RoutedEventArgs e)
+    private void BtnConnect_Click(object sender, RoutedEventArgs e)
     {
         if (_isConnecting)
             return;
@@ -106,7 +111,7 @@ public partial class MainWindow : Window
 
         try
         {
-            await ConnectAsync();
+            Connect();
         }
         finally
         {
@@ -115,7 +120,7 @@ public partial class MainWindow : Window
         }
     }
 
-    private async Task ConnectAsync()
+    private void Connect()
     {
         try
         {
@@ -399,6 +404,13 @@ public partial class MainWindow : Window
             _localizationService.CurrentLanguage = languageCode;
             _config.Language = languageCode;
             _config.Save();
+            UpdateVersionText();
         }
+    }
+
+    private void UpdateVersionText()
+    {
+        var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "1.0.0";
+        TxtVersion.Text = _localizationService.GetString("StatusBar.Version", version);
     }
 }

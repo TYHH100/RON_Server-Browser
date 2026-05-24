@@ -250,7 +250,7 @@
                 <TextBlock x:Name="TxtServerCount" Text="{ext:Localize Key=StatusBar.ServerCount}" FontWeight="Medium" Foreground="#555" Margin="8,0"/>
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">
-                <TextBlock Text="{ext:Localize Key=StatusBar.Version}" Margin="8,0" Foreground="#888"/>
+                <TextBlock x:Name="TxtVersion" Text="{ext:Localize Key=StatusBar.Version}" Margin="8,0" Foreground="#888"/>
             </StatusBarItem>
         </StatusBar>
     </Grid>

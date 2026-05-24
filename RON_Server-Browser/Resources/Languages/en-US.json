@@ -26,7 +26,7 @@
   "GroupBox.Header.Metadata": "Metadata Details (Selected Lobby)",
   "TextBlock.Metadata.Empty": "Select a lobby to view full metadata",
   "StatusBar.ServerCount": "Lobbies: {0}",
-  "StatusBar.Version": "Ready Or Not Lobby Browser v1.0",
+  "StatusBar.Version": "Ready Or Not Lobby Browser v{0}",
   "Message.Error.SteamConnect": "Failed to connect to Steam.\n\nPlease ensure:\n1. Steam client is running and logged in\n2. Your account owns Ready Or Not",
   "Message.Error.NotInitialized": "Lobby service not initialized. Please click [Connect Steam] first",
   "Message.Error.NotConnected": "Steam not connected. Please click [Connect Steam] first",

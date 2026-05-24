@@ -1,5 +1,5 @@
 {
-  "Language": "中文",
+  "Language": "简体中文",
   "Window.Title": "Ready Or Not 大厅浏览器",
   "Button.Connect": "连接 Steam",
   "Button.Connecting": "连接中...",
@@ -26,7 +26,7 @@
   "GroupBox.Header.Metadata": "元数据详情（选中大厅）",
   "TextBlock.Metadata.Empty": "请选择一个大厅查看完整元数据",
   "StatusBar.ServerCount": "大厅: {0}",
-  "StatusBar.Version": "严阵以待(RON)大厅浏览器 v1.0",
+  "StatusBar.Version": "严阵以待(RON)大厅浏览器 v{0}",
   "Message.Error.SteamConnect": "无法连接到 Steam。\n\n请确保:\n1. Steam 客户端已启动并登录\n2. 当前账号拥有 Ready Or Not 游戏",
   "Message.Error.NotInitialized": "大厅服务未初始化，请先点击 [连接 Steam] 按钮",
   "Message.Error.NotConnected": "Steam 未连接，请先点击 [连接 Steam] 按钮",
